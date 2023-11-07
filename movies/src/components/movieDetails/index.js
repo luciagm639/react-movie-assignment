@@ -74,8 +74,10 @@ const MovieDetails = ({ movie }) => {  // Don't miss this!
           </li>
         ))}
       </Paper>
+      <Typography variant="h5" component="h3">
+        Recommendations
+      </Typography>
       <Paper
-        component="ul"
         sx={{ ...root }}
       >
         <MovieRecommendations movie= {movie} ></MovieRecommendations>

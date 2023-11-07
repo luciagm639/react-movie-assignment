@@ -4,6 +4,7 @@ import AddToMustWatchIcon from "../cardIcons/addToMustWatch"
 import { getMovieRecommendations } from "../../api/tmdb-api";
 import Spinner from '../spinner';
 import { useQuery } from "react-query";
+import { Grid } from "@mui/material";
 
 function MovieRecommendations({ movie }) {
     const nameOfQuery = movie.title + 'Recommendations'
@@ -21,11 +22,15 @@ function MovieRecommendations({ movie }) {
     let displayedMovies = data
 
     return (
-        <MovieList
-            action={(movie) => {
-                return <AddToMustWatchIcon movie={movie} />
-            }}
-            movies={displayedMovies}></MovieList>
+        <Grid container spacing={2}>
+            <MovieList
+                action={(movie) => {
+                    return <AddToMustWatchIcon movie={movie} />
+                }}
+                movies={displayedMovies}>
+
+            </MovieList>
+        </Grid>
     );
 }
 export default MovieRecommendations;
