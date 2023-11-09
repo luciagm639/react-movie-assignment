@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from "../movieReviews"
 import MovieRecommendations from "../movieRecommendations";
+import MovieActors from "../movieActors";
 
 
 const root = {
@@ -73,6 +74,14 @@ const MovieDetails = ({ movie }) => {  // Don't miss this!
             <Chip label={c.name} sx={{ ...chip }} />
           </li>
         ))}
+      </Paper>
+      <Typography variant="h5" component="h3">
+        Actors
+      </Typography>
+      <Paper
+        sx={{ ...root }}
+      >
+        <MovieActors movie= {movie} ></MovieActors>
       </Paper>
       <Typography variant="h5" component="h3">
         Recommendations

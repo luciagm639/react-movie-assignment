@@ -8,7 +8,7 @@ import { Grid } from "@mui/material";
 
 function MovieRecommendations({ movie }) {
     const nameOfQuery = movie.title + 'Recommendations'
-    console.log(nameOfQuery)
+    //console.log(nameOfQuery)
     const { data, error, isLoading, isError } = useQuery(nameOfQuery, () => getMovieRecommendations(movie.id))
 
     if (isLoading) {
@@ -19,7 +19,7 @@ function MovieRecommendations({ movie }) {
         return <h1>{error.message}</h1>
     }
     //console.log(data)
-    let displayedMovies = data
+    let displayedMovies = data.slice(0,10)
 
     return (
         <Grid container spacing={2}>

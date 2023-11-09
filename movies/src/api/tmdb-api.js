@@ -139,3 +139,14 @@ export const getMovieReviews = (id) => {
         return json.results;
       });
   };
+
+  export const getMovieActors = (id) => {
+    return fetch(
+      `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${process.env.REACT_APP_TMDB_KEY}`
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+        return json.cast;
+      });
+  };
