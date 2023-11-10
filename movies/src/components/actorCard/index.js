@@ -5,6 +5,8 @@ import CardHeader from "@mui/material/CardHeader";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import img from '../../images/film-poster-placeholder.png'
+import { CardActions, Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export default function ActorCard({ actor }) {
 
@@ -34,6 +36,13 @@ export default function ActorCard({ actor }) {
           </Grid>
         </Grid>
       </CardContent>
+      <CardActions disableSpacing>
+        <Link to={`/actors/${actor.id}`}>
+          <Button variant="outlined" size="medium" color="primary">
+            More Info ...
+          </Button>
+        </Link>
+      </CardActions>
     </Card>
   );
 }
