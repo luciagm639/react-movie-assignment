@@ -13,6 +13,7 @@ import img from '../../images/pexels-dziana-hasanbekava-5480827.jpg'
 import { getGenres } from "../../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from '../spinner'
+import { Slider } from "@mui/material";
 
 const formControl =
 {
@@ -33,7 +34,7 @@ export default function FilterMoviesCard(props) {
     return <h1>{error.message}</h1>;
   }
   const genres = data.genres;
-  if (genres[0].name !== "All"){
+  if (genres[0].name !== "All") {
     genres.unshift({ id: "0", name: "All" });
   }
 
@@ -48,6 +49,11 @@ export default function FilterMoviesCard(props) {
 
   const handleGenreChange = (e) => {
     handleChange(e, "genre", e.target.value);
+  };
+
+  const handleRateChange = (e) => {
+    console.log(e.target.value)
+    handleChange(e, "rate", e.target.value);
   };
 
   return (
@@ -89,6 +95,19 @@ export default function FilterMoviesCard(props) {
             })}
           </Select>
         </FormControl>
+        <InputLabel id="rate-label">Rate</InputLabel>
+        <Slider
+          id="rate-label"
+          aria-label="Rate"
+          defaultValue={0}
+          getAriaValueText=""
+          valueLabelDisplay="auto"
+          step={1}
+          marks
+          min={0}
+          max={10}
+          onChange={handleRateChange}
+        />
       </CardContent>
       <CardMedia
         sx={{ height: 300 }}

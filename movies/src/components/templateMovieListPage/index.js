@@ -7,6 +7,7 @@ import Grid from "@mui/material/Grid";
 function MovieListPageTemplate({ movies, title, action }) {
     const [nameFilter, setNameFilter] = useState("");
     const [genreFilter, setGenreFilter] = useState("0");
+    const [rateFilter, setRateFilter] = useState("1");
     const genreId = Number(genreFilter);
 
     let displayedMovies = movies
@@ -15,11 +16,17 @@ function MovieListPageTemplate({ movies, title, action }) {
         })
         .filter((m) => {
             return genreId > 0 ? m.genre_ids.includes(genreId) : true;
-        });
+        })
+        .filter( (m) => {
+            return rateFilter <= m.vote_average ;
+        }
+
+        );
 
     const handleChange = (type, value) => {
         if (type === "name") setNameFilter(value);
-        else setGenreFilter(value);
+        if (type === "genre") setGenreFilter(value);
+        else setRateFilter(value);
     };
 
     return (
