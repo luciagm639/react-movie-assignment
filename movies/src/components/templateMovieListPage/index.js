@@ -8,25 +8,66 @@ function MovieListPageTemplate({ movies, title, action }) {
     const [nameFilter, setNameFilter] = useState("");
     const [genreFilter, setGenreFilter] = useState("0");
     const [rateFilter, setRateFilter] = useState("1");
+    const [order, setOrder] = useState("2");
     const genreId = Number(genreFilter);
 
-    let displayedMovies = movies
+    function sortIfNeccessary(movieList) {
+        if (order === 1) {
+            return movieList.sort((m1, m2) => { 
+                let date1 = new Date(m1.release_date)
+                let date2 = new Date(m2.release_date)
+                return date1 - date2 
+            })
+        }
+        if (order === 2) {
+            return movieList.sort((m1, m2) => { 
+                let date1 = new Date(m1.release_date)
+                let date2 = new Date(m2.release_date)
+                return date2 - date1 
+            })
+        }
+        if (order === 3) {
+            return movieList.sort((m1, m2) => {
+                if (m1.title < m2.title) {
+                    return -1
+                }
+                if (m1.title > m2.title) {
+                    return 1
+                }
+                return 0
+            })
+        }
+        if (order === 4) {
+            return movieList.sort((m1, m2) => {
+                if (m1.title > m2.title) {
+                    return -1
+                }
+                if (m1.title < m2.title) {
+                    return 1
+                }
+                return 0
+            })
+        }
+        return movieList
+    }
+
+
+    let displayedMovies = sortIfNeccessary(movies
         .filter((m) => {
             return m.title.toLowerCase().search(nameFilter.toLowerCase()) !== -1;
         })
         .filter((m) => {
             return genreId > 0 ? m.genre_ids.includes(genreId) : true;
         })
-        .filter( (m) => {
-            return rateFilter <= m.vote_average ;
-        }
-
-        );
+        .filter((m) => {
+            return rateFilter <= m.vote_average;
+        }));
 
     const handleChange = (type, value) => {
         if (type === "name") setNameFilter(value);
         if (type === "genre") setGenreFilter(value);
-        else setRateFilter(value);
+        if (type === "rate") setRateFilter(value);
+        else setOrder(value);
     };
 
     return (

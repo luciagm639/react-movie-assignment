@@ -52,8 +52,12 @@ export default function FilterMoviesCard(props) {
   };
 
   const handleRateChange = (e) => {
-    console.log(e.target.value)
     handleChange(e, "rate", e.target.value);
+  };
+
+  const handleOrderChange = (e) => {
+    console.log(e.target.value)
+    handleChange(e, "order", e.target.value);
   };
 
   return (
@@ -100,7 +104,6 @@ export default function FilterMoviesCard(props) {
           id="rate-label"
           aria-label="Rate"
           defaultValue={0}
-          getAriaValueText=""
           valueLabelDisplay="auto"
           step={1}
           marks
@@ -108,6 +111,29 @@ export default function FilterMoviesCard(props) {
           max={10}
           onChange={handleRateChange}
         />
+        <FormControl sx={{ ...formControl }}>
+          <InputLabel id="order-label">Order by</InputLabel>
+          <Select
+            labelId="order-label"
+            id="order-select"
+            defaultValue=""
+            onChange={handleOrderChange}
+          >
+            <MenuItem key={1} value={1}>
+              Release date (oldest to newest)
+            </MenuItem>
+            <MenuItem key={2} value={2}>
+              Release date (newest to oldest)
+            </MenuItem>
+            <MenuItem key={3} value={3}>
+              Title (A - Z)
+            </MenuItem>
+            <MenuItem key={4} value={4}>
+              Title (Z - A)
+            </MenuItem>
+          </Select>
+        </FormControl>
+
       </CardContent>
       <CardMedia
         sx={{ height: 300 }}
