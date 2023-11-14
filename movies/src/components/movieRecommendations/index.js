@@ -7,8 +7,7 @@ import { useQuery } from "react-query";
 import { Grid } from "@mui/material";
 
 function MovieRecommendations({ movie }) {
-    const nameOfQuery = movie.title + 'Recommendations'
-    //console.log(nameOfQuery)
+    const nameOfQuery = movie.id + 'Recommendations'
     const { data, error, isLoading, isError } = useQuery(nameOfQuery, () => getMovieRecommendations(movie.id))
 
     if (isLoading) {
@@ -18,7 +17,10 @@ function MovieRecommendations({ movie }) {
     if (isError) {
         return <h1>{error.message}</h1>
     }
-    //console.log(data)
+
+    if(data.length == 0){
+        return <h2>No recommendations yet...</h2>
+    }
     let displayedMovies = data.slice(0,10)
 
     return (

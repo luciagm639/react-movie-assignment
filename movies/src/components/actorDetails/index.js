@@ -23,9 +23,7 @@ const root = {
 const ActorDetails = ({ actor }) => {  // Don't miss this!
 
   const nameOfQuery = actor.id + 'Movies'
-  //console.log(nameOfQuery)
   const { data, error, isLoading, isError } = useQuery(nameOfQuery, () => getActorMovies(actor.id))
-
 
   return (
     <>
