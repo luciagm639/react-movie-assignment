@@ -1,4 +1,4 @@
-import React, { useContext  } from "react";
+import React, { useContext } from "react";
 import { MoviesContext } from "../../contexts/moviesContext";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -45,17 +45,23 @@ export default function MovieCard({ movie, action }) {
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
         avatar={
-          movie.favorite ? (
+          movie.favorite && movie.mustWatch ? (
             <Avatar sx={{ backgroundColor: 'red' }}>
               <FavoriteIcon />
-            </Avatar>
-          ) : 
-          (movie.mustWatch ? (
-            <Avatar sx={{ backgroundColor: 'red' }}>
               <PlaylistAdd />
-            </Avatar>
-          ) : null)
-          
+            </Avatar>)
+            : (
+              movie.favorite ? (
+                <Avatar sx={{ backgroundColor: 'red' }}>
+                  <FavoriteIcon />
+                </Avatar>
+              ) :
+                (movie.mustWatch ? (
+                  <Avatar sx={{ backgroundColor: 'red' }}>
+                    <PlaylistAdd />
+                  </Avatar>
+                ) : null))
+
         }
         title={
           <Typography variant="h5" component="p">
