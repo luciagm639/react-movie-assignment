@@ -4,19 +4,19 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
 import { UserContext } from "../contexts/userContext";
 import { useContext } from 'react';
-import { Card, CardContent, Grid, CardHeader, Typography } from '@mui/material';
-import TextField from '@mui/material/TextField';
+import { Card, CardContent, Grid, CardHeader, Typography, TextField, Button } from '@mui/material';
 
 const Signup = () => {
     const navigate = useNavigate();
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState(null);
 
     const { loggedIn } = useContext(UserContext)
     console.log(loggedIn)
     useEffect(() => { if (loggedIn) { navigate("/home") } })
-
+    
     const onSubmit = async (e) => {
         e.preventDefault()
 
@@ -30,7 +30,7 @@ const Signup = () => {
             })
             .catch((error) => {
                 const errorCode = error.code;
-                const errorMessage = error.message;
+                setErrorMessage(error.message);
                 console.log(errorCode, errorMessage);
                 // ..
             });
@@ -48,7 +48,7 @@ const Signup = () => {
             }}>
                 <Card sx={{ maxWidth: 400 }}>
                     <CardHeader title={
-                        <Typography variant="h5" component="p">
+                        <Typography variant="h5" component="p" style={{ textAlign: 'center' }}>
                             SIGN UP
                         </Typography>
                     } />
@@ -62,6 +62,7 @@ const Signup = () => {
                                     required
                                     onChange={(e) => setEmail(e.target.value)}
                                     sx={{ width: 350 }}
+                                    style={{ padding: 10 }}
                                 />
                                 <TextField
                                     id="password"
@@ -70,14 +71,19 @@ const Signup = () => {
                                     type="password"
                                     required
                                     onChange={(e) => setPassword(e.target.value)}
-
+                                    style={{ padding: 10 }}
                                 />
-                                <button
-                                    type="submit"
-                                    onClick={onSubmit}
-                                >
-                                    Sign up
-                                </button>
+                                <Grid container style={{justifyContent: 'center'}}>
+                                    <Button
+                                        color="secondary"
+                                        variant="contained"
+                                        type="submit"
+                                        onClick={onSubmit}
+                                    >
+                                        Sign up
+                                    </Button>
+                                </Grid>
+                                {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
                             </form>
                         </Grid>
                         <Grid container>

@@ -5,14 +5,13 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { UserContext } from "../contexts/userContext";
 import { useContext } from 'react';
 import { useEffect } from 'react';
-import { CardHeader, Card, Typography, CardContent } from '@mui/material';
-import Grid from "@mui/material/Grid";
-import TextField from '@mui/material/TextField';
+import { CardHeader, Card, Typography, CardContent, Grid, TextField, Button } from '@mui/material';
 
 const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState(null);
 
     const { loggedIn, logIn } = useContext(UserContext)
     useEffect(() => { if (loggedIn) { navigate("/home") } })
@@ -29,7 +28,7 @@ const Login = () => {
             })
             .catch((error) => {
                 const errorCode = error.code;
-                const errorMessage = error.message;
+                setErrorMessage(error.message);
                 console.log(errorCode, errorMessage)
             });
 
@@ -46,7 +45,7 @@ const Login = () => {
                 }}>
                     <Card sx={{ maxWidth: 400 }}>
                         <CardHeader title={
-                            <Typography variant="h5" component="p">
+                            <Typography variant="h5" component="p" style={{ textAlign: 'center' }}>
                                 LOG IN
                             </Typography>
                         } />
@@ -60,6 +59,7 @@ const Login = () => {
                                         required
                                         onChange={(e) => setEmail(e.target.value)}
                                         sx={{ width: 350 }}
+                                        style={{ padding: 10 }}
                                     />
 
                                     <TextField
@@ -69,15 +69,18 @@ const Login = () => {
                                         type="password"
                                         required
                                         onChange={(e) => setPassword(e.target.value)}
-
+                                        style={{ padding: 10 }}
                                     />
-                                    <div>
-                                        <button
+                                    <Grid container style={{justifyContent: 'center'}}>
+                                        <Button
+                                            color="secondary"
+                                            variant="contained"
+                                            type="submit"
                                             onClick={onLogin}
                                         >
                                             Login
-                                        </button>
-                                    </div>
+                                        </Button>
+                                    </Grid>
                                 </form>
                             </Grid>
                             <Grid container>
@@ -88,6 +91,7 @@ const Login = () => {
                                     </NavLink>
                                 </p>
                             </Grid>
+                            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
                         </CardContent>
                     </Card>
                 </section>
