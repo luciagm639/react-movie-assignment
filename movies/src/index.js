@@ -16,28 +16,9 @@ import TopRatedMoviesPage from "./pages/topRatedMoviesPage";
 import PopularMoviesPage from "./pages/popularMoviesPage";
 import NowPlayingMoviesPage from "./pages/nowPlayingMoviesPage";
 import ActorPage from "./pages/actorDetailsPage";
-
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyBS-OmGfkbEWUqs91Z4szVaVCG2A2TDB_k",
-  authDomain: "web-app-dev-assignment-1.firebaseapp.com",
-  projectId: "web-app-dev-assignment-1",
-  storageBucket: "web-app-dev-assignment-1.appspot.com",
-  messagingSenderId: "781797487533",
-  appId: "1:781797487533:web:55f58d005798b9eed4e724",
-  measurementId: "G-4D4M1E6D56"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+import Signup from './pages/signup';
+import Login from './pages/login';
+import UserContextProvider from "./contexts/userContext";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -54,27 +35,34 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <SiteHeader />
-        <MoviesContextProvider>
-          <Routes>
-            <Route path="/reviews/form" element={ <AddMovieReviewPage /> } />
-            <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
-            <Route path="/movies/mustWatch" element={<MustWatchMoviesPage />} />
-            <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
-            <Route path="/movies/top-rated" element={<TopRatedMoviesPage />} />
-            <Route path="/movies/popular" element={<PopularMoviesPage />} />
-            <Route path="/movies/now-playing" element={<NowPlayingMoviesPage />} />
-            <Route path="/reviews/:id" element={<MovieReviewPage />} />
-            <Route path="/movies/:id" element={<MoviePage />} />
-            <Route path="/actors/:id" element={<ActorPage />} />
-            <Route path="/" element={<HomePage />} />
-            <Route path="*" element={<Navigate to="/" />} />
-          </Routes>
-        </MoviesContextProvider>
+        <Routes>
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/reviews/form" element={<AddMovieReviewPage />} />
+          <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
+          <Route path="/movies/mustWatch" element={<MustWatchMoviesPage />} />
+          <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
+          <Route path="/movies/top-rated" element={<TopRatedMoviesPage />} />
+          <Route path="/movies/popular" element={<PopularMoviesPage />} />
+          <Route path="/movies/now-playing" element={<NowPlayingMoviesPage />} />
+          <Route path="/reviews/:id" element={<MovieReviewPage />} />
+          <Route path="/movies/:id" element={<MoviePage />} />
+          <Route path="/actors/:id" element={<ActorPage />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/" element={<Signup />} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    </QueryClientProvider >
   );
 };
 
 const rootElement = createRoot(document.getElementById("root"))
-rootElement.render(<App />);
+rootElement.render(
+  <MoviesContextProvider>
+    <UserContextProvider>
+      <App />
+    </UserContextProvider>
+  </MoviesContextProvider>
+);
